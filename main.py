@@ -187,7 +187,6 @@ if __name__ == "__main__":
             stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
             print(stat, msg)
             if stat == "ok":
-                print("现在的时间是：{}".datetime.today())
                 break
     s.wechatNotice("图书馆预约{}，现在的时间是：{}".format("成功" if stat == "ok" else "失败",datetime.today()), msg)
     '''
