@@ -150,6 +150,7 @@ class SeatAutoBooker:
 
 
 if __name__ == "__main__":
+    
     with open("_config.yml", 'r') as f_obj:
         cfg = yaml.safe_load(f_obj)
 
@@ -159,7 +160,7 @@ if __name__ == "__main__":
         exit(0)
 
     # 阅览室晚上9点开始预约，自习室晚上8点开始预约
-    
+    '''
     if "自习室" not in cfg[key]["type"] and "自定义" not in cfg[key]["type"]:
         # 阅览室
         if datetime.now().hour <= 20 - time_zone or datetime.now().hour == 20 - time_zone and datetime.now().minute < 30:  # github action cron定时有波动
@@ -169,7 +170,7 @@ if __name__ == "__main__":
         if datetime.now().hour > 20 - time_zone and datetime.now().minute > 30:
             print("自习室已于上个Action预约，请检查上一个预约")
             exit(0)
-   
+    '''
     print("尝试预约,开始时间：{}，持续时间：{}小时".format(cfg[key]['开始时间'], cfg[key]['持续小时数']))
  
     s = SeatAutoBooker()
