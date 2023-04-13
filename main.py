@@ -190,6 +190,9 @@ if __name__ == "__main__":
             if stat == "ok":
                 print("现在的时间是：{}".datetime.today())
                 break
+    s.wechatNotice("图书馆预约{}，现在的时间是：{}".format("成功" if stat == "ok" else "失败",datetime.today()), msg)
+    '''
     s.wechatNotice("图书馆预约{}".format("成功" if stat == "ok" else "失败"), msg)
+    '''
     print(stat, msg)
     s.driver.quit()
