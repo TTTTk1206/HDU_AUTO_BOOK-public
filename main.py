@@ -183,15 +183,15 @@ if __name__ == "__main__":
     stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
     if stat != "ok":
         for i in range(20):
-            print("尝试重新预约")
-            print("图书馆预约{}，现在的时间是：{}".format("成功" if stat == "ok" else "失败",datetime.now()), msg)
+            print("尝试重新预约中")
+            print("图书馆预约{}，现在的时间是：{}".format("失败啦",datetime.now()), msg)
             time.sleep(10)
             stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
             print(stat, msg)
             if stat == "ok":
                 print("图书馆预约{}，现在的时间是：{}".format("成功" if stat == "ok" else "失败",datetime.today()), msg)
                 break
-    s.wechatNotice("图书馆预约{}，现在的时间是：{}".format("成功" if stat == "ok" else "失败",datetime.today()), msg)
+    s.wechatNotice("座位预约{}，现在的时间是：{}".format("成功" if stat == "ok" else "失败",datetime.today()), msg)
     '''
     s.wechatNotice("图书馆预约{}".format("成功" if stat == "ok" else "失败"), msg)
     '''
