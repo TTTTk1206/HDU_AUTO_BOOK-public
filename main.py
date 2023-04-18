@@ -156,7 +156,7 @@ if __name__ == "__main__":
         # hold on
         slep=60-datetime.now().minute
         snap=datetime.now().second
-        print("图书馆预约时间未到，我将等待{}分钟后运行，现在的时间是19：{}：{}".format(slep,datetime.now().minute,datetime.now().second))
+        print("图书馆预约时间未到，我将等待约{}分钟后运行，现在的时间是19：{}：{}".format(slep,datetime.now().minute,datetime.now().second))
         time.sleep(60*slep-snap-30)
         print("我醒了，现在的时间是：{}：{}：{},即将开始预约".format(time_zone+datetime.now().hour,datetime.now().minute,datetime.now().second))
     else:                                                                    
@@ -185,14 +185,16 @@ if __name__ == "__main__":
             if i == 0: print("第一次勇敢牛牛！")
             if i == 1: print("第二次勇敢牛牛！")
             if i == 2: print("终极勇敢牛牛！")
-            print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))   
-            print("预约失败啦，现在的时间是：{}：{}：{}".format(time_zone+datetime.now().hour,datetime.now().minute,datetime.now().second))
+            print (time.strftime("%Y-%m-%d %H+8:%M:%S", time.localtime()))   
             time.sleep(6)
             stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
             print(stat, msg)
+            print (time.strftime("%Y-%m-%d %H+8:%M:%S", time.localtime())) 
             if stat == "ok":
-                print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+                print ("牛不灭！牛最强！")
+                print (time.strftime("%Y-%m-%d %H+8:%M:%S", time.localtime()))
                 break
+    print("{}".format("勇敢牛牛，不怕困难！" if stat == "ok" else "npk48!"))
     s.wechatNotice("{}".format("勇敢牛牛，不怕困难！" if stat == "ok" else "npk48!"))
     print(stat, msg)
     s.driver.quit()
