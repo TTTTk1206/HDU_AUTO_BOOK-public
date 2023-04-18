@@ -157,7 +157,7 @@ if __name__ == "__main__":
         snap=datetime.now().second
         print("图书馆预约时间未到，我将等待约{}分钟后运行，现在的时间是：")
         print (time.strftime("%Y-%m-%d %H+time_zone:%M:%S", time.localtime()))
-        time.sleep(60*slep-snap-30)
+        time.sleep(60*slep-snap-24)
         print("我醒了，即将开始预约，现在的时间是：")
         print (time.strftime("%Y-%m-%d %H+8:%M:%S", time.localtime()))
     else:                                                                    
