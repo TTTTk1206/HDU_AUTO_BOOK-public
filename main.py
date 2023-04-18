@@ -148,7 +148,6 @@ class SeatAutoBooker:
             except Exception as e:
                 print(e.__class__, "推送服务配置错误")
 
-
 if __name__ == "__main__":
     if datetime.now().hour == 18 - time_zone :  
         time.sleep(3600)
@@ -156,11 +155,14 @@ if __name__ == "__main__":
         # hold on
         slep=60-datetime.now().minute
         snap=datetime.now().second
-        print("图书馆预约时间未到，我将等待约{}分钟后运行，现在的时间是19：{}：{}".format(slep,datetime.now().minute,datetime.now().second))
+        print("图书馆预约时间未到，我将等待约{}分钟后运行，现在的时间是：")
+        print (time.strftime("%Y-%m-%d %H+time_zone:%M:%S", time.localtime()))
         time.sleep(60*slep-snap-30)
-        print("我醒了，现在的时间是：{}：{}：{},即将开始预约".format(time_zone+datetime.now().hour,datetime.now().minute,datetime.now().second))
+        print("我醒了，即将开始预约，现在的时间是：")
+        print (time.strftime("%Y-%m-%d %H+8:%M:%S", time.localtime()))
     else:                                                                    
         print("还未到预约时间！请稍后再试！")
+        print (time.strftime("%Y-%m-%d %H+8:%M:%S", time.localtime()))
         exit(0)
     with open("_config.yml", 'r') as f_obj:
         cfg = yaml.safe_load(f_obj)
@@ -185,11 +187,10 @@ if __name__ == "__main__":
             if i == 0: print("第一次勇敢牛牛！")
             if i == 1: print("第二次勇敢牛牛！")
             if i == 2: print("终极勇敢牛牛！")
-            print (time.strftime("%Y-%m-%d %H+8:%M:%S", time.localtime()))   
-            time.sleep(6)
+            print (time.strftime("%Y-%m-%d %H+8:%M:%S", time.localtime()))               
             stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
             print(stat, msg)
-            print (time.strftime("%Y-%m-%d %H+8:%M:%S", time.localtime())) 
+            time.sleep(6)
             if stat == "ok":
                 print ("牛不灭！牛最强！")
                 print (time.strftime("%Y-%m-%d %H+8:%M:%S", time.localtime()))
