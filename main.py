@@ -154,15 +154,15 @@ if __name__ == "__main__":
     if datetime.now().hour == 19 - time_zone :  
         # hold on
         slep=60-datetime.now().minute
-        snap=datetime.now().second
-        print("图书馆预约时间未到，我将等待约{}分钟后运行，现在的时间是：")
+        nap=datetime.now().second
+        print("图书馆预约时间未到，我将等待约{}分钟后运行，现在的时间是：".format(slep))
         print (time.strftime("%Y-%m-%d %(H+time_zone):%M:%S", time.localtime()))
-        time.sleep(60*slep-snap-24)
+        time.sleep(60*slep-nap-24)
         print("我醒了，即将开始预约，现在的时间是：")
-        print (time.strftime("%Y-%m-%d %H+8:%M:%S", time.localtime()))
+        print (time.strftime("%Y-%m-%d %19:%M:%S", time.localtime()))
     else:                                                                    
         print("还未到预约时间！请稍后再试！")
-        print (time.strftime("%Y-%m-%d %(H+8):%M:%S", time.localtime()))
+        print (time.strftime("%Y-%m-%d %19:%M:%S", time.localtime()))
         exit(0)
     with open("_config.yml", 'r') as f_obj:
         cfg = yaml.safe_load(f_obj)
