@@ -25,9 +25,6 @@ def get_one_study_room_seat(floor):
     if floor == 4:
         # 28868-29237
         return random.randint(28868, 29237)
-    if floor == 22:
-        # 58560-58759
-        return random.randint(58560, 58759)
 
 
 class SeatAutoBooker:
@@ -78,8 +75,6 @@ class SeatAutoBooker:
             seats = [get_one_study_room_seat(2)]
         elif self.type == "四楼自习室":
             seats = [get_one_study_room_seat(4)]
-        elif self.type == "二楼电子阅览室":
-            seats = [get_one_study_room_seat(22)]
         # 相关post参数生成
         today_0_clock = datetime.strptime(datetime.now().strftime("%Y-%m-%d 00:00:00"), "%Y-%m-%d %H:%M:%S")
         book_time = today_0_clock + timedelta(days=2) + timedelta(hours=start_hour)
@@ -153,8 +148,22 @@ class SeatAutoBooker:
             except Exception as e:
                 print(e.__class__, "推送服务配置错误")
 
-
 if __name__ == "__main__":
+    if datetime.now().hour == 18 - time_zone :  
+        time.sleep(3300)
+    if datetime.now().hour == 19 - time_zone :  
+        # hold on
+        slep=60-datetime.now().minute
+        nap=datetime.now().second
+        print("图书馆预约时间未到，我将等待约{}分钟后运行，现在的时间是：".format(slep))
+        print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        time.sleep(60*slep-nap-24)
+        print("我醒了，即将开始预约，现在的时间是：")
+        print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+    else:                                                                    
+        print("还未到预约时间！请稍后再试！")
+        print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        exit(0)
     with open("_config.yml", 'r') as f_obj:
         cfg = yaml.safe_load(f_obj)
 
@@ -163,20 +172,8 @@ if __name__ == "__main__":
         print("后天无预约")
         exit(0)
 
-    # 阅览室晚上9点开始预约，自习室晚上8点半开始预约
-
-    if( "自习室" not in cfg[key]["type"]) and ( "电子阅览室" not in cfg[key]["type"]):
-        # 阅览室
-        if datetime.now().hour <= 20 - time_zone or datetime.now().hour == 20 - time_zone and datetime.now().minute < 30:  # github action cron定时有波动
-            print("阅览室预约于21点开始预约，现在还未到预约时间，请检查下一个Action")
-            exit(0)
-    else:
-        if datetime.now().hour > 20 - time_zone and datetime.now().minute > 30:
-            print("自习室已于上个Action预约，请检查上一个预约")
-            exit(0)
-
     print("尝试预约,开始时间：{}，持续时间：{}小时".format(cfg[key]['开始时间'], cfg[key]['持续小时数']))
-
+ 
     s = SeatAutoBooker()
     if not s.login() == 0:
         s.driver.quit()
@@ -186,13 +183,19 @@ if __name__ == "__main__":
         exit(-1)
     stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
     if stat != "ok":
-        for i in range(12):
-            print("尝试重新预约")
-            time.sleep(30)
+        for i in range(3):
+            if i == 0: print("第一次勇敢牛牛！")
+            if i == 1: print("第二次勇敢牛牛！")
+            if i == 2: print("终极勇敢牛牛！")
+            print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))               
             stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
             print(stat, msg)
+            time.sleep(6)
             if stat == "ok":
+                print ("牛不灭！牛最强！")
+                print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
                 break
-    s.wechatNotice("图书馆预约{}".format("成功" if stat == "ok" else "失败"), msg)
+    print("{}".format("勇敢牛牛，不怕困难！" if stat == "ok" else "npk48!"))
+    s.wechatNotice("{}".format("勇敢牛牛，不怕困难！" if stat == "ok" else "npk48!"))
     print(stat, msg)
     s.driver.quit()
