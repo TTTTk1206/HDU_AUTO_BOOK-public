@@ -184,8 +184,8 @@ if __name__ == "__main__":
     stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
     print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
     if stat != "ok":
-        time.sleep(60-datetime.now().second)
-        for i in range(30):
+        time.sleep(59-datetime.now().second)
+        for i in range(9):
             if i == 0: print("第一次勇敢牛牛！")
             if i == 1: print("第二次勇敢牛牛！")
             if i == 2: print("终极勇敢牛牛！")
