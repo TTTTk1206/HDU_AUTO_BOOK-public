@@ -149,15 +149,13 @@ class SeatAutoBooker:
                 print(e.__class__, "推送服务配置错误")
 
 if __name__ == "__main__":
-    if datetime.now().hour == 18 - time_zone :  
-        time.sleep(3300)
     if datetime.now().hour == 19 - time_zone :  
         # hold on
         slep=60-datetime.now().minute
         nap=datetime.now().second
         print("图书馆预约时间未到，我将等待约{}分钟后运行，现在的时间是：".format(slep))
         print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-        time.sleep(60*slep-nap-24)
+        time.sleep(60*slep-nap-30)
         print("我醒了，即将开始预约，现在的时间是：")
         print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
     else:                                                                    
@@ -181,16 +179,21 @@ if __name__ == "__main__":
     if not s.get_user_info() == 0:
         s.driver.quit()
         exit(-1)
+        
+    print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
     stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
+    print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
     if stat != "ok":
-        for i in range(3):
+        time.sleep(60-datetime.now().second)
+        for i in range(30):
             if i == 0: print("第一次勇敢牛牛！")
             if i == 1: print("第二次勇敢牛牛！")
             if i == 2: print("终极勇敢牛牛！")
             print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))               
             stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
             print(stat, msg)
-            time.sleep(6)
+            print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
+            time.sleep(1)
             if stat == "ok":
                 print ("牛不灭！牛最强！")
                 print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
