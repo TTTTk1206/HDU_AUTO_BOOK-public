@@ -185,7 +185,7 @@ if __name__ == "__main__":
     print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
     if stat != "ok":
         time.sleep(58-datetime.now().second)
-        for i in range(9):
+        for i in range(6):
             print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))               
             stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
             print(stat, msg)
