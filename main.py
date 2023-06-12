@@ -190,8 +190,6 @@ if __name__ == "__main__":
             exit(0)
 """
 
-    print("尝试预约,开始时间：{}，持续时间：{}小时".format(cfg[key]['开始时间'], cfg[key]['持续小时数']))
-
     s = SeatAutoBooker()
     if not s.login() == 0:
         s.driver.quit()
