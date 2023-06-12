@@ -155,6 +155,19 @@ class SeatAutoBooker:
 
 
 if __name__ == "__main__":
+    if datetime.now().hour == 19 - time_zone :  
+        # hold on
+        slep=60-datetime.now().minute
+        nap=datetime.now().second
+        print("图书馆预约时间未到，我将等待约{}分钟后运行，现在的时间是：".format(slep))
+        print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        time.sleep(60*slep-nap-39)
+        print("我醒了，即将开始预约，现在的时间是：")
+        print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+    else:                                                                    
+        print("还未到预约时间！请稍后再试！")
+        print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        exit(0)   
     with open("_config.yml", 'r') as f_obj:
         cfg = yaml.safe_load(f_obj)
 
@@ -163,8 +176,9 @@ if __name__ == "__main__":
         print("后天无预约")
         exit(0)
 
-    # 阅览室晚上9点开始预约，自习室晚上8点半开始预约
+    # 阅览室晚上9点开始预约，自习室晚上8点开始预约
 
+"""
     if( "自习室" not in cfg[key]["type"]) and ( "电子阅览室" not in cfg[key]["type"]):
         # 阅览室
         if datetime.now().hour <= 20 - time_zone or datetime.now().hour == 20 - time_zone and datetime.now().minute < 30:  # github action cron定时有波动
@@ -174,6 +188,7 @@ if __name__ == "__main__":
         if datetime.now().hour > 20 - time_zone and datetime.now().minute > 30:
             print("自习室已于上个Action预约，请检查上一个预约")
             exit(0)
+"""
 
     print("尝试预约,开始时间：{}，持续时间：{}小时".format(cfg[key]['开始时间'], cfg[key]['持续小时数']))
 
@@ -186,12 +201,14 @@ if __name__ == "__main__":
         exit(-1)
     stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
     if stat != "ok":
+        time.sleep(58-datetime.now().second)
         for i in range(12):
             print("尝试重新预约")
-            time.sleep(30)
+            time.sleep(1.3)
             stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
             print(stat, msg)
             if stat == "ok":
+                print("{}".format("Talk Dirty to Me！" if stat == "ok" else "Sorry！"))
                 break
     s.wechatNotice("图书馆预约{}".format("成功" if stat == "ok" else "失败"), msg)
     print(stat, msg)
