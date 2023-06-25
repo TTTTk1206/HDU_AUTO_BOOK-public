@@ -149,7 +149,7 @@ class SeatAutoBooker:
                 print(e.__class__, "推送服务配置错误")
 
 if __name__ == "__main__":
-    if datetime.now().hour == 19 - time_zone :  
+    if datetime.now().hour == 19 - time_zone or datetime.now().hour == 23 - time_zone :  
         # hold on
         slep=60-datetime.now().minute
         nap=datetime.now().second
@@ -184,13 +184,14 @@ if __name__ == "__main__":
     stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
     print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
     if stat != "ok":
-        time.sleep(58-datetime.now().second)
+        nap=datetime.now().second
+        time.sleep(59-nap)
         for i in range(6):
             print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))               
             stat, msg = s.book_favorite_seat(cfg[key]['开始时间'], cfg[key]['持续小时数'])
             print(stat, msg)
             print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) 
-            time.sleep(0.5)
+            time.sleep(1)
             if stat == "ok":
                 print ("成功了")
                 print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
