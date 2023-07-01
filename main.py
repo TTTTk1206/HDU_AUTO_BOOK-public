@@ -82,7 +82,7 @@ class SeatAutoBooker:
             seats = [get_one_study_room_seat(22)]
         # 相关post参数生成
         today_0_clock = datetime.strptime(datetime.now().strftime("%Y-%m-%d 00:00:00"), "%Y-%m-%d %H:%M:%S")
-        book_time = today_0_clock + timedelta(days=3) + timedelta(hours=start_hour)
+        book_time = today_0_clock + timedelta(days=2) + timedelta(hours=start_hour)
         delta = book_time - self.start_time
         total_seconds = delta.days * 24 * 3600 + delta.seconds
 
